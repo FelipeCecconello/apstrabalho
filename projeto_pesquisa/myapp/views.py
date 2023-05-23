@@ -1,11 +1,31 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Aluno, Professor, Atividade, Projeto, Reitor
+from .models import Aluno, Professor, Atividade, Projeto, Reitor, Pessoa
 
 def listar_usuarios(request):
     alunos = Aluno.objects.all()
     professores = Professor.objects.all()
     reitores = Reitor.objects.all()
     return render(request, 'listar_usuarios.html', {'alunos': alunos, 'professores': professores, 'reitores':reitores})
+
+def visualizar_usuario(request, usuario_id):
+    usuario = Pessoa.objects.filter(id=usuario_id).first()
+    usuario_id = 1
+    # Verificar se é um reitor
+    is_reitor = Reitor.objects.filter(id=usuario_id).exists()
+    # Verificar se é um professor
+    is_professor = Professor.objects.filter(id=usuario_id).exists()
+    # Verificar se é um aluno
+    is_aluno = Aluno.objects.filter(id=usuario_id).exists()
+    # Exemplo de uso
+    tipo = "Não Definido"
+    if is_reitor:
+        tipo = "Reitor"        
+    elif is_professor:
+        tipo = "Professor"
+    elif is_aluno:
+        tipo = "Aluno"
+
+    return render(request, 'visualizar_usuario.html', { 'cpf': usuario.cpf, 'nome': usuario.nome, 'tipo': tipo })
 
 def adicionar_usuario(request):
     if request.method == 'POST':

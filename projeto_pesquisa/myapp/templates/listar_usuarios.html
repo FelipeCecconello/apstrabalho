@@ -7,19 +7,19 @@
     <h1>Alunos</h1>
     <ul>
     {% for aluno in alunos %}
-        <li>{{ aluno.nome }}</li>
+        <a href="/myapp/visualizar-usuario/{{ aluno.id }}/"><li class="pessoa-list-item">{{ aluno.nome }}</li></a> 
     {% endfor %}
     </ul>
     <h1>Professores</h1>
     <ul>
     {% for professor in professores %}
-        <li>{{ professor.nome }}</li>
+        <a href="/myapp/visualizar-usuario/{{ professor.id }}/"><li class="pessoa-list-item">{{ professor.nome }}</li></a> 
     {% endfor %}
     </ul>
     <h1>Reitores</h1>
     <ul>
     {% for reitor in reitores %}
-        <li>{{ reitor.nome }}</li>
+        <a href="/myapp/visualizar-usuario/{{ reitor.id }}/"><li class="pessoa-list-item">{{ reitor.nome }}</li></a> 
     {% endfor %}
     </ul>
 </body>

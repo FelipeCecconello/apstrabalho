@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Usuários</title>
+</head>
+<body>
+    <h1>Visualizar Usuário</h1>
+    
+    <label for="cpf">CPF:</label>
+    <input type="text" id="cpf" name="cpf" value="{{ cpf }}" readonly><br><br>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" value="{{ nome }}" readonly><br><br>
+    <label for="nome">Tipo:</label>
+    <input type="text" id="tipo" name="tipo" value="{{ tipo }}" readonly><br><br>
+
+    <a href="/myapp/listar-usuarios"><input type="button" value="Voltar"></a>
+
+    
+</body>
+</html>

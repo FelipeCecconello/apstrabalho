@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Aluno, Professor, Atividade, Projeto
+from .models import Aluno, Professor, Atividade, Projeto, Reitor
 
 def listar_usuarios(request):
     alunos = Aluno.objects.all()
     professores = Professor.objects.all()
-    return render(request, 'listar_usuarios.html', {'alunos': alunos, 'professores': professores})
+    reitores = Reitor.objects.all()
+    return render(request, 'listar_usuarios.html', {'alunos': alunos, 'professores': professores, 'reitores':reitores})
 
 def adicionar_usuario(request):
     if request.method == 'POST':
@@ -15,6 +16,8 @@ def adicionar_usuario(request):
             Aluno.objects.create(cpf=cpf, nome=nome)
         elif tipo == 'professor':
             Professor.objects.create(cpf=cpf, nome=nome)
+        elif tipo == 'reitor':
+            Reitor.objects.create(cpf=cpf, nome=nome)
         return render(request, 'adicionar_usuario.html', {'success': True})
     return render(request, 'adicionar_usuario.html')
 

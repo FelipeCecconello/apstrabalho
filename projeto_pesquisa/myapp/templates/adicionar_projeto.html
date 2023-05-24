@@ -41,6 +41,15 @@
             <label for="situacao">situacao:</label>
             <input type="text" id="situacao" name="situacao" value="{{ projeto.situacao }}" readonly><br><br>
 
+            <h1>Atividades</h1>
+            <ul>
+                {% for atividade in atividades %}
+                    <li>{{ atividade.descricao }} - {{ atividade.situacao }}</li>
+                {% empty %}
+                    <li>Nenhuma atividade encontrada.</li>
+                {% endfor %}
+            </ul>
+            <a href='/myapp/projeto/{{projeto.id}}/criar-atividade/'><input type="button" value="Criar Atividade"></a>
             <a class="mb20" href="/myapp/listar-projetos"><input type="button" value="Voltar"></a>
         </form>
     {% else %}

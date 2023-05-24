@@ -2,83 +2,15 @@
 <html>
 <head>
     <title>Adicionar Atividade</title>
-    <style>
-        .nomeProfessor {
-            margin-bottom: 20px;
-        }
-        .box {
-            display: flex;
-        }
-        .mb20 {
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
-
-    {% if edit %}
-        <h1>Visualizar Projeto</h1>
-
-        {% if success %}
-            <p>Projeto adicionado com sucesso!</p>
-
-        {% endif %}
-        <div class="nomeProfessor">Professor Responsável <strong>{{ professor.nome }}</strong></div>
-
-        <form method="post">
-            {% csrf_token %}
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="{{ projeto.nome }}" readonly><br><br>
-        
-            <label for="inicio">inicio:</label>
-            <input type="text" id="inicio" name="inicio" value="{{ projeto.inicio|date:'d/m/Y' }}" readonly><br><br>
-            
-            <label for="fim">fim:</label>
-            <input type="text" id="fim" name="fim" value="{{ projeto.fim|date:'d/m/Y' }}" readonly><br><br>
-            
-            <label for="situacao">situacao:</label>
-            <input type="text" id="situacao" name="situacao" value="{{ projeto.situacao }}" readonly><br><br>
-
-            <div class="box">                
-                <label for="atividades">atividades:</label><br/>
-                <ul id="atividades" name="atividades">
-                    {% for atv in atividades %}
-                        <li value="{{ atv.id }}">{{ atv.descricao }}</li>
-                    {% endfor %}
-                </ul>
-                <a href="/myapp/projeto/{{ projeto.id }}/criar-atividade/">
-                    <input type="button" value="Adicionar Atividade">
-                </a>
-            </div>
-
-            <div class="box mb20">                
-                <label for="relatorios">relatorios:</label><br/>
-                <ul id="relatorios" name="relatorios">
-                    {% for rlt in relatorios %}
-                        <li value="{{ rlt.id }}">{{ rlt.descricao }}</li>
-                    {% endfor %}
-                </ul>
-                <a href="/myapp/projeto/{{ projeto.id }}/criar-relatorio/">
-                    <input type="button" value="Adicionar Relatório">
-                </a>
-            </div>
-            <a class="mb20" href="/myapp/listar-projetos"><input type="button" value="Voltar"></a>
-        </form>
-    {% else %}
-        <h1>Adicionar Atividade</h1>
-
-        <div class="nome">Nome do Projeto  <strong>{{ projeto.nome }}</strong></div>
-
-        <form method="post">
-            {% csrf_token %}
-            <label for="descricao">Descrição:</label>
-            <input type="text" id="descricao" name="descricao" required><br><br>
-                   
-            <a href="/myapp/visualizar-projeto/{{ projeto.id }}/"><input type="button" value="Voltar"></a>
-            <input type="submit" value="Adicionar">
-        </form>
-
-    {% endif %}
-    
+    <h1>Adicionar Atividade</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" name="descricao" required>
+        <br><br>
+        <input type="submit" value="Adicionar Atividade">
+    </form>
 </body>
 </html>

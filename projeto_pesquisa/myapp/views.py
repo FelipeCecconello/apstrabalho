@@ -46,12 +46,15 @@ def listar_projetos(request):
 
 def visualizar_projeto(request, projeto_id):
     projeto = Projeto.objects.filter(id=projeto_id).first()
-    return render(request, 'adicionar_projeto.html', { 'success': False, 'edit': True, 'projeto': projeto, 'professor': projeto.coordenador})
+    atividades = projeto.atividades.all()
+    
+    return render(request, 'adicionar_projeto.html', { 'success': False, 'edit': True, 'projeto': projeto, 'professor': projeto.coordenador, 'atividades': atividades})
 
 
 def criar_projeto(request, professor_id):
     professor = get_object_or_404(Professor, pk=professor_id)
     alunos = Aluno.objects.all()
+
     if request.method == 'POST':
         nome = request.POST.get('nome')
         inicio = request.POST.get('inicio')

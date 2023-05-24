@@ -24,7 +24,9 @@
 
         {% endif %}
         <div class="nomeProfessor">Professor Responsável <strong>{{ professor.nome }}</strong></div>
-
+        <div class="nomeAluno">Aluno Responsável <strong>{{ projeto.aluno.nome }}</strong></div>
+        </br>
+        
         <form method="post">
             {% csrf_token %}
             <label for="nome">Nome:</label>
@@ -39,29 +41,6 @@
             <label for="situacao">situacao:</label>
             <input type="text" id="situacao" name="situacao" value="{{ projeto.situacao }}" readonly><br><br>
 
-            <div class="box">                
-                <label for="atividades">atividades:</label><br/>
-                <ul id="atividades" name="atividades">
-                    {% for atv in projeto.atividades.all %}
-                        <li value="{{ atv.id }}">{{ atv.descricao }}</li>
-                    {% endfor %}
-                </ul>
-                <a href="/myapp/projeto/{{ projeto.id }}/criar-atividade/">
-                    <input type="button" value="Adicionar Atividade">
-                </a>
-            </div>
-
-            <div class="box mb20">                
-                <label for="relatorios">relatorios:</label><br/>
-                <ul id="relatorios" name="relatorios">
-                    {% for rlt in projeto.relatorios.all %}
-                        <li value="{{ rlt.id }}">{{ rlt.descricao }}</li>
-                    {% endfor %}
-                </ul>
-                <a href="/myapp/projeto/{{ projeto.id }}/criar-relatorio/">
-                    <input type="button" value="Adicionar Relatório">
-                </a>
-            </div>
             <a class="mb20" href="/myapp/listar-projetos"><input type="button" value="Voltar"></a>
         </form>
     {% else %}
@@ -80,8 +59,12 @@
             <label for="fim">fim:</label>
             <input type="date" id="fim" name="fim" required><br><br>
             
-            <label for="situacao">situacao:</label>
-            <input type="text" id="situacao" name="situacao" required><br><br>
+            <label for="aluno">Aluno:</label>
+            <select id="aluno" name="aluno" required>
+                {% for aluno in alunos %}
+                    <option value={{aluno.cpf}}>{{aluno.nome}}</option>
+                {% endfor %}
+            </select><br><br>
     
         
             <a href="/myapp/listar-projetos"><input type="button" value="Voltar"></a>

@@ -7,16 +7,9 @@ class Pessoa(models.Model):
 class Professor(Pessoa):
     pass
 
-    def criar_projeto(self, nome, inicio, fim, situacao, atividades_ids, relatorios_ids):
-        projeto = Projeto(nome=nome, inicio=inicio, fim=fim, situacao=situacao, coordenador=self)
-        # Adicionar atividades ao projeto
-        atividades = Atividade.objects.filter(id__in=atividades_ids)
-        projeto.atividades.set(atividades)
-
-        # Adicionar relatórios ao projeto
-        relatorios = Relatorio.objects.filter(id__in=relatorios_ids)
-        projeto.relatorios.set(relatorios)
-
+    def criar_projeto(self, nome, inicio, fim, situacao, aluno):
+        aluno = Aluno.objects.get(cpf=aluno)
+        projeto = Projeto(nome=nome, inicio=inicio, fim=fim, situacao=situacao, coordenador=self, aluno=aluno)
         projeto.save()  # Salvar o projeto no banco de dados
 
         return projeto
@@ -39,6 +32,7 @@ class Projeto(models.Model):
     coordenador = models.ForeignKey(Professor, on_delete=models.CASCADE)
     atividades = models.ManyToManyField(Atividade)
     relatorios = models.ManyToManyField(Relatorio)
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, null=True, blank=True)
 
     def criar_atividade(self, descricao):
         atv = Atividade(descricao=descricao, situacao="A Fazer")

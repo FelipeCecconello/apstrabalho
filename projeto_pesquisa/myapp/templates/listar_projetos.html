@@ -7,7 +7,7 @@
     <h1>Projetos</h1>
     <ul>
     {% for projeto in projetos %}
-        <a href="/myapp/visualizar-projeto/{{ projeto.id }}/"><li class="list-item">Projeto: {{ projeto.nome }} | Coordenador: {{ projeto.coordenador.nome }}</li></a> 
+        <a href="/myapp/visualizar-projeto/{{ projeto.id }}/"><li class="list-item">Projeto: {{ projeto.nome }} | Coordenador: {{ projeto.coordenador.nome }}  | Aluno: {{ projeto.aluno.nome }}</li></a> 
     {% endfor %}
     </ul>
 </body>

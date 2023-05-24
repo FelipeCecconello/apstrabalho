@@ -51,17 +51,16 @@ def visualizar_projeto(request, projeto_id):
 
 def criar_projeto(request, professor_id):
     professor = get_object_or_404(Professor, pk=professor_id)
+    alunos = Aluno.objects.all()
     if request.method == 'POST':
         nome = request.POST.get('nome')
         inicio = request.POST.get('inicio')
         fim = request.POST.get('fim')
-        situacao = request.POST.get('situacao')
-        atividades_ids = request.POST.get('atividades_ids')
-        relatorios_ids = request.POST.get('relatorios_ids')
-        
-        projeto = professor.criar_projeto(nome, inicio, fim, situacao, atividades_ids=atividades_ids, relatorios_ids=relatorios_ids)
+        situacao = 'Aguardando aprovação'
+        aluno = request.POST.get('aluno')
+        projeto = professor.criar_projeto(nome, inicio, fim, situacao, aluno)
         return render(request, 'adicionar_projeto.html', { 'success': True, 'edit': True, 'projeto': projeto, 'professor': projeto.coordenador})
-    return render(request, 'adicionar_projeto.html', { 'success': False, 'edit': False, 'professor': professor, })
+    return render(request, 'adicionar_projeto.html', { 'success': False, 'edit': False, 'professor': professor, 'alunos': alunos})
 
 def criar_atividade(request, projeto_id):
     projeto = get_object_or_404(Projeto, pk=projeto_id)

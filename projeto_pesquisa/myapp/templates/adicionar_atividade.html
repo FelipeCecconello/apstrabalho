@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Adicionar Projeto</title>
+    <title>Adicionar Atividade</title>
     <style>
         .nomeProfessor {
             margin-bottom: 20px;
@@ -42,7 +42,7 @@
             <div class="box">                
                 <label for="atividades">atividades:</label><br/>
                 <ul id="atividades" name="atividades">
-                    {% for atv in projeto.atividades.all %}
+                    {% for atv in atividades %}
                         <li value="{{ atv.id }}">{{ atv.descricao }}</li>
                     {% endfor %}
                 </ul>
@@ -54,7 +54,7 @@
             <div class="box mb20">                
                 <label for="relatorios">relatorios:</label><br/>
                 <ul id="relatorios" name="relatorios">
-                    {% for rlt in projeto.relatorios.all %}
+                    {% for rlt in relatorios %}
                         <li value="{{ rlt.id }}">{{ rlt.descricao }}</li>
                     {% endfor %}
                 </ul>
@@ -65,26 +65,16 @@
             <a class="mb20" href="/myapp/listar-projetos"><input type="button" value="Voltar"></a>
         </form>
     {% else %}
-        <h1>Adicionar Projeto</h1>
+        <h1>Adicionar Atividade</h1>
 
-        <div class="nomeProfessor">Professor Responsável <strong>{{ professor.nome }}</strong></div>
+        <div class="nome">Nome do Projeto  <strong>{{ projeto.nome }}</strong></div>
 
         <form method="post">
             {% csrf_token %}
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required><br><br>
-           
-            <label for="inicio">inicio:</label>
-            <input type="date" id="inicio" name="inicio" required><br><br>
-            
-            <label for="fim">fim:</label>
-            <input type="date" id="fim" name="fim" required><br><br>
-            
-            <label for="situacao">situacao:</label>
-            <input type="text" id="situacao" name="situacao" required><br><br>
-    
-        
-            <a href="/myapp/listar-projetos"><input type="button" value="Voltar"></a>
+            <label for="descricao">Descrição:</label>
+            <input type="text" id="descricao" name="descricao" required><br><br>
+                   
+            <a href="/myapp/visualizar-projeto/{{ projeto.id }}/"><input type="button" value="Voltar"></a>
             <input type="submit" value="Adicionar">
         </form>
 

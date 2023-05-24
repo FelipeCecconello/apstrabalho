@@ -44,6 +44,11 @@ def listar_projetos(request):
     projetos = Projeto.objects.all()
     return render(request, 'listar_projetos.html', { 'projetos': projetos })
 
+def visualizar_projeto(request, projeto_id):
+    projeto = Projeto.objects.filter(id=projeto_id).first()
+    return render(request, 'adicionar_projeto.html', { 'success': False, 'edit': True, 'projeto': projeto, 'professor': projeto.coordenador})
+
+
 def criar_projeto(request, professor_id):
     professor = get_object_or_404(Professor, pk=professor_id)
     if request.method == 'POST':
@@ -51,25 +56,28 @@ def criar_projeto(request, professor_id):
         inicio = request.POST.get('inicio')
         fim = request.POST.get('fim')
         situacao = request.POST.get('situacao')
-        projeto = professor.criar_projeto(nome, inicio, fim, situacao)
-        return render(request, 'adicionar_projeto.html', { 'success': True, 'projeto': projeto, 'professor': projeto.coordenador})
-    return render(request, 'adicionar_projeto.html', { 'success': False, 'professor': professor })
+        atividades_ids = request.POST.get('atividades_ids')
+        relatorios_ids = request.POST.get('relatorios_ids')
+        
+        projeto = professor.criar_projeto(nome, inicio, fim, situacao, atividades_ids=atividades_ids, relatorios_ids=relatorios_ids)
+        return render(request, 'adicionar_projeto.html', { 'success': True, 'edit': True, 'projeto': projeto, 'professor': projeto.coordenador})
+    return render(request, 'adicionar_projeto.html', { 'success': False, 'edit': False, 'professor': professor, })
 
 def criar_atividade(request, projeto_id):
     projeto = get_object_or_404(Projeto, pk=projeto_id)
     if request.method == 'POST':
         descricao = request.POST.get('descricao')
-        atividade = projeto.criar_atividade(descricao)
-        return render(request, 'atividade_criada.html', {'atividade': atividade})
-    return render(request, 'criar_atividade.html', {'projeto': projeto})
+        projeto.criar_atividade(descricao)
+        return visualizar_projeto(request, projeto_id)
+    return render(request, 'adicionar_atividade.html', {'projeto': projeto})
 
 def criar_relatorio(request, projeto_id):
     projeto = get_object_or_404(Projeto, pk=projeto_id)
     if request.method == 'POST':
         descricao = request.POST.get('descricao')
-        relatorio = projeto.criar_relatorio(descricao)
-        return render(request, 'relatorio_criado.html', {'relatorio': relatorio})
-    return render(request, 'criar_relatorio.html', {'projeto': projeto})
+        projeto.criar_relatorio(descricao)
+        return visualizar_projeto(request, projeto_id)
+    return render(request, 'adicionar_relatorio.html', {'projeto': projeto})
 
 def executar_atividade(request, atividade_id):
     atividade = get_object_or_404(Atividade, pk=atividade_id)

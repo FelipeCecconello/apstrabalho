@@ -9,7 +9,6 @@ def listar_usuarios(request):
 
 def visualizar_usuario(request, usuario_id):
     usuario = Pessoa.objects.filter(id=usuario_id).first()
-    usuario_id = 1
     # Verificar se é um reitor
     is_reitor = Reitor.objects.filter(id=usuario_id).exists()
     # Verificar se é um professor
@@ -25,7 +24,7 @@ def visualizar_usuario(request, usuario_id):
     elif is_aluno:
         tipo = "Aluno"
 
-    return render(request, 'visualizar_usuario.html', { 'cpf': usuario.cpf, 'nome': usuario.nome, 'tipo': tipo })
+    return render(request, 'visualizar_usuario.html', { 'cpf': usuario.cpf, 'nome': usuario.nome, 'tipo': tipo, 'id': usuario.id })
 
 def adicionar_usuario(request):
     if request.method == 'POST':
@@ -41,15 +40,20 @@ def adicionar_usuario(request):
         return render(request, 'adicionar_usuario.html', {'success': True})
     return render(request, 'adicionar_usuario.html')
 
+def listar_projetos(request):
+    projetos = Projeto.objects.all()
+    return render(request, 'listar_projetos.html', { 'projetos': projetos })
+
 def criar_projeto(request, professor_id):
     professor = get_object_or_404(Professor, pk=professor_id)
     if request.method == 'POST':
         nome = request.POST.get('nome')
         inicio = request.POST.get('inicio')
         fim = request.POST.get('fim')
-        projeto = professor.criar_projeto(nome, inicio, fim)
-        return render(request, 'projeto_criado.html', {'projeto': projeto})
-    return render(request, 'criar_projeto.html')
+        situacao = request.POST.get('situacao')
+        projeto = professor.criar_projeto(nome, inicio, fim, situacao)
+        return render(request, 'adicionar_projeto.html', { 'success': True, 'projeto': projeto, 'professor': projeto.coordenador})
+    return render(request, 'adicionar_projeto.html', { 'success': False, 'professor': professor })
 
 def criar_atividade(request, projeto_id):
     projeto = get_object_or_404(Projeto, pk=projeto_id)

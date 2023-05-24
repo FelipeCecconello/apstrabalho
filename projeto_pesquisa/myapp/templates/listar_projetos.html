@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Projetos</title>
+</head>
+<body>
+    <h1>Projetos</h1>
+    <ul>
+    {% for projeto in projetos %}
+        <a href="/myapp/visualizar-projeto/{{ projeto.id }}/"><li class="list-item">Projeto: {{ projeto.nome }} | Coordenador: {{ projeto.coordenador.nome }}</li></a> 
+    {% endfor %}
+    </ul>
+</body>
+</html>

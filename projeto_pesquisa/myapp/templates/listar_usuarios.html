@@ -4,22 +4,24 @@
     <title>Lista de Usuários</title>
 </head>
 <body>
+    <a href="/myapp/adicionar-usuario/"><input type="button" value="Adicionar Pessoa"></a>
+
     <h1>Alunos</h1>
     <ul>
     {% for aluno in alunos %}
-        <a href="/myapp/visualizar-usuario/{{ aluno.id }}/"><li class="pessoa-list-item">{{ aluno.nome }}</li></a> 
+        <a href="/myapp/visualizar-usuario/{{ aluno.id }}/"><li class="list-item">{{ aluno.nome }}</li></a> 
     {% endfor %}
     </ul>
     <h1>Professores</h1>
     <ul>
     {% for professor in professores %}
-        <a href="/myapp/visualizar-usuario/{{ professor.id }}/"><li class="pessoa-list-item">{{ professor.nome }}</li></a> 
+        <a href="/myapp/visualizar-usuario/{{ professor.id }}/"><li class="list-item">{{ professor.nome }}</li></a> 
     {% endfor %}
     </ul>
     <h1>Reitores</h1>
     <ul>
     {% for reitor in reitores %}
-        <a href="/myapp/visualizar-usuario/{{ reitor.id }}/"><li class="pessoa-list-item">{{ reitor.nome }}</li></a> 
+        <a href="/myapp/visualizar-usuario/{{ reitor.id }}/"><li class="list-item">{{ reitor.nome }}</li></a> 
     {% endfor %}
     </ul>
 </body>

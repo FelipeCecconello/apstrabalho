@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adicionar Projeto</title>
+    <style>
+        .nomeProfessor {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adicionar Projeto</h1>
+    {% if success %}
+        <p>Projeto adicionado com sucesso!</p>
+    {% endif %}
+    
+    <div class="nomeProfessor">Professor Responsável <strong>{{ professor.nome }}</strong></div>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
+       
+        <label for="inicio">inicio:</label>
+        <input type="date" id="inicio" name="inicio" required><br><br>
+        
+        <label for="fim">fim:</label>
+        <input type="date" id="fim" name="fim" required><br><br>
+        
+        <label for="situacao">situacao:</label>
+        <input type="text" id="situacao" name="situacao" required><br><br>
+        
+        <!--
+            <select id="coordenador" name="coordenador" required>
+                {% for prof in professores %}
+                    <option value="{{ prof.id }}">{{ prof.nome }}</option>
+                {% endfor %}
+            </select><br><br>        
+        -->
+        <a href="/myapp/listar-projetos"><input type="button" value="Voltar"></a>
+        <input type="submit" value="Adicionar">
+    </form>
+</body>
+</html>

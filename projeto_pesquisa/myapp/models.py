@@ -7,6 +7,9 @@ class Pessoa(models.Model):
 class Professor(Pessoa):
     pass
 
+    def criar_projeto(self, nome, inicio, fim, situacao):
+        return Projeto.objects.create(nome=nome, inicio=inicio, fim=fim, situacao=situacao, coordenador=self)
+
 class Aluno(Pessoa):
     pass
 

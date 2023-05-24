@@ -13,8 +13,10 @@
     <label for="nome">Tipo:</label>
     <input type="text" id="tipo" name="tipo" value="{{ tipo }}" readonly><br><br>
 
-    <a href="/myapp/listar-usuarios"><input type="button" value="Voltar"></a>
+    <a href="/myapp/listar-usuarios"><input type="button" value="Voltar"></a><br />
+    {% if tipo == "Professor" %}
+        <a href="/myapp/professor/{{ id }}/criar-projeto/"><input type="button" value="Adicionar Projeto"></a>
+    {% endif %}
 
-    
 </body>
 </html>

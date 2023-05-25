@@ -67,6 +67,10 @@ class Projeto(models.Model):
         self.save()
         return self
         
+    def aprovar_projeto(self):
+        self.situacao = "Aprovado"
+        self.save()
+        return self
 
 class Reitor(Pessoa):
     pass

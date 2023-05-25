@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Aluno, Professor, Atividade, Projeto, Reitor, Pessoa
 
 def index(request):
@@ -29,15 +29,20 @@ def visualizar_usuario(request, usuario_id):
     # Verificar se é um aluno
     is_aluno = Aluno.objects.filter(id=usuario_id).exists()
     # Exemplo de uso
-    tipo = "Não Definido"
-    if is_reitor:
-        tipo = "Reitor"        
-    elif is_professor:
-        tipo = "Professor"
-    elif is_aluno:
-        tipo = "Aluno"
 
-    return render(request, 'visualizar_usuario.html', { 'cpf': usuario.cpf, 'nome': usuario.nome, 'tipo': tipo, 'id': usuario.id })
+    if is_aluno:
+        aluno = Aluno.objects.get(id=usuario_id)
+        projeto = Projeto.objects.get(aluno=aluno)
+        atividades = projeto.atividades.all()
+        return render(request, 'visualizar_aluno.html', {'aluno':aluno, 'projeto':projeto, 'atividades':atividades})
+    elif is_professor:
+        professor = Professor.objects.get(id=usuario_id)
+        projetos = Projeto.objects.filter(coordenador=professor)
+        return render(request, 'visualizar_usuario.html', {'professor':professor, 'projetos':projetos})
+    elif is_reitor:
+        reitor = Reitor.objects.get(id=usuario_id)
+        projetos = Projeto.objects.all()
+        return render(request, 'visualizar_reitor.html', {'reitor':reitor, 'projetos':projetos})
 
 def adicionar_usuario(request):
     if request.method == 'POST':
@@ -113,3 +118,10 @@ def finalizar_projeto(request, projeto_id):
         return render(request, 'projeto_finalizado.html', {'projeto': projeto, 'atividades': atividades, 'relatorios': relatorios})
     else:        
         return render(request, 'atividades_pendentes.html', {'projeto': projeto})
+    
+def aprovar_projeto(request, projeto_id):
+    projeto = get_object_or_404(Projeto, pk=projeto_id)
+    projeto.aprovar_projeto()
+    referer_url = request.META.get('HTTP_REFERER')
+    return redirect(referer_url)
+    

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aluno</title>
+</head>
+<body>
+    <h1>Visualizar Aluno</h1>
+    
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" value="{{ aluno.nome }}" readonly><br><br>
+
+    <h3>Projeto</h3>
+
+    <label for="nome">Nome do projeto:</label>
+    <input type="text" id="nome" name="nome" value="{{ projeto.nome }}" readonly><br><br>
+
+    <label for="inicio">inicio:</label>
+    <input type="text" id="inicio" name="inicio" value="{{projeto.inicio|date:'d/m/Y'}}" readonly><br><br>
+    
+    <label for="fim">fim:</label>
+    <input type="text" id="fim" name="fim" value="{{projeto.fim|date:'d/m/Y'}}" readonly><br><br>
+    
+    <label for="situacao">situacao:</label>
+    <input type="text" id="situacao" name="situacao" value="{{ projeto.situacao }}" readonly><br><br>
+
+    <h3>Atividades</h3>
+    <ul>
+        {% for atividade in atividades %}
+            <li><a href='/myapp/visualizar-atividade/{{atividade.id}}/projeto/{{projeto.id}}'>{{ atividade.descricao }} - {{ atividade.situacao }}</a></li>
+        {% empty %}
+            <li>Nenhuma atividade encontrada.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/myapp/listar-usuarios"><input type="button" value="Voltar"></a><br />
+
+</body>
+</html>

@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lista de Usuários</title>
+    <title>Professor</title>
 </head>
 <body>
-    <h1>Visualizar Usuário</h1>
+    <h1>Visualizar Professor</h1>
     
-    <label for="cpf">CPF:</label>
-    <input type="text" id="cpf" name="cpf" value="{{ cpf }}" readonly><br><br>
     <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" value="{{ nome }}" readonly><br><br>
+    <input type="text" id="nome" name="nome" value="{{ professor.nome }}" readonly><br><br>
     <label for="nome">Tipo:</label>
-    <input type="text" id="tipo" name="tipo" value="{{ tipo }}" readonly><br><br>
+    <input type="text" id="tipo" name="tipo" value="Professor" readonly><br><br>
 
+    <h3>Projetos</h3>
+    <ul>
+        {% for projeto in projetos %}
+            <a href="/myapp/visualizar-projeto/{{ projeto.id }}/"><li class="list-item">Projeto: {{ projeto.nome }} | Coordenador: {{ projeto.coordenador.nome }}  | Aluno: {{ projeto.aluno.nome }}</li></a> 
+        {% empty %}
+            <li>Nenhuma atividade encontrada.</li>
+        {% endfor %}
+    </ul>
+    
     <a href="/myapp/listar-usuarios"><input type="button" value="Voltar"></a><br />
-    {% if tipo == "Professor" %}
-        <a href="/myapp/professor/{{ id }}/criar-projeto/"><input type="button" value="Adicionar Projeto"></a>
-    {% endif %}
+    </br>
+    <a href="/myapp/professor/{{ professor.id }}/criar-projeto/"><input type="button" value="Adicionar Projeto"></a>
+    </br>
+
 
 </body>
 </html>

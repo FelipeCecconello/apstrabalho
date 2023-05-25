@@ -4,13 +4,40 @@
     <title>Adicionar Atividade</title>
 </head>
 <body>
-    <h1>Adicionar Atividade</h1>
-    <form method="POST">
+    
+    {% if tipo_tela == "detail" %}
+        <h1>Visualizar Atividade</h1>
+        <form method="POST">
         {% csrf_token %}
-        <label for="descricao">Descrição:</label>
-        <input type="text" id="descricao" name="descricao" required>
-        <br><br>
-        <input type="submit" value="Adicionar Atividade">
-    </form>
+        
+            <label for="descricao">Descrição:</label>
+            <input type="text" id="descricao" name="descricao"
+                value="{{atividade.descricao}}" readonly><br /><br/>
+            <label for="situacao">Situação:</label>
+            <input type="text" id="situacao" name="situacao"
+                value="{{atividade.situacao}}" readonly>
+                <br><br>
+        </form>
+        <div style="margin-top: 10px;">
+            <a href="/myapp/atividade/{{ atividade.id }}/executar/projeto/{{ projeto.id}}"><input type="button" value="Executar Atividade"></a>
+        </div>
+    
+    {% else %}
+        <h1>Adicionar Atividade</h1>
+        <form method="POST">
+        {% csrf_token %}
+        
+            <label for="descricao">Descrição:</label>
+                <input type="text" id="descricao" name="descricao" required>
+                <br><br>
+            <input type="submit" value="Adicionar Atividade">
+        </form>
+    {% endif %}
+
+
+    <div style="margin-top: 10px;">
+        <a class="mb20" href="/myapp/visualizar-projeto/{{ projeto.id }}/"><input type="button" value="Voltar"></a>
+    </div>
+
 </body>
 </html>

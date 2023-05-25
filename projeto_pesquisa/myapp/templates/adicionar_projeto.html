@@ -33,24 +33,40 @@
             <input type="text" id="nome" name="nome" value="{{ projeto.nome }}" readonly><br><br>
         
             <label for="inicio">inicio:</label>
-            <input type="text" id="inicio" name="inicio" value="{{ projeto.inicio|date:'d/m/Y' }}" readonly><br><br>
+            <input type="text" id="inicio" name="inicio" value="{{projeto.inicio|date:'d/m/Y'}}" readonly><br><br>
             
             <label for="fim">fim:</label>
-            <input type="text" id="fim" name="fim" value="{{ projeto.fim|date:'d/m/Y' }}" readonly><br><br>
+            <input type="text" id="fim" name="fim" value="{{projeto.fim|date:'d/m/Y'}}" readonly><br><br>
             
             <label for="situacao">situacao:</label>
             <input type="text" id="situacao" name="situacao" value="{{ projeto.situacao }}" readonly><br><br>
 
-            <h1>Atividades</h1>
+            <h3>Atividades</h3>
             <ul>
                 {% for atividade in atividades %}
-                    <li>{{ atividade.descricao }} - {{ atividade.situacao }}</li>
+                    <li><a href='/myapp/visualizar-atividade/{{atividade.id}}/projeto/{{projeto.id}}'>{{ atividade.descricao }} - {{ atividade.situacao }}</a></li>
                 {% empty %}
                     <li>Nenhuma atividade encontrada.</li>
                 {% endfor %}
             </ul>
             <a href='/myapp/projeto/{{projeto.id}}/criar-atividade/'><input type="button" value="Criar Atividade"></a>
-            <a class="mb20" href="/myapp/listar-projetos"><input type="button" value="Voltar"></a>
+
+            <br /> <br />
+            <h3>Relatorios</h3>
+            <ul>
+                {% for rlt in relatorios %}
+                    <li>{{ rlt.descricao }}</li>
+                {% empty %}
+                    <li>Nenhum Relatório encontrado.</li>
+                {% endfor %}
+            </ul>
+            <a href='/myapp/projeto/{{projeto.id}}/criar-relatorio/'><input type="button" value="Criar Relatório"></a>
+
+
+            <div style="margin-top: 30px;">
+                <a class="mb20" href="/myapp/listar-projetos"><input type="button" value="Voltar"></a>
+                <a class="mb20" href="/myapp/projeto/{{projeto.id}}/finalizar"><input type="button" value="Finalizar Projeto"></a>
+            </div>
         </form>
     {% else %}
         <h1>Adicionar Projeto</h1>

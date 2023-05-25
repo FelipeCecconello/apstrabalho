@@ -21,6 +21,11 @@ class Atividade(models.Model):
     descricao = models.TextField()
     situacao = models.CharField(max_length=20)
 
+    def executar(self):
+        self.situacao="Feito"
+        self.save()
+        return self
+
 class Relatorio(models.Model):
     descricao = models.TextField()
 
@@ -37,11 +42,31 @@ class Projeto(models.Model):
     def criar_atividade(self, descricao):
         atv = Atividade(descricao=descricao, situacao="A Fazer")
         atv.save()
-
         self.atividades.add(atv)
         self.save()
-
         return atv
+    
+    def criar_relatorio(self, descricao):
+        rlt = Relatorio(descricao=descricao)
+        rlt.save()
+        self.relatorios.add(rlt)
+        self.save()
+        return rlt
+
+    def verificar_conclusao(self):
+        """
+            Retorna True caso o projeto satisfaz condições para ser concluído
+        """
+        for atv in self.atividades.all():
+            if (atv.situacao == "A Fazer"):
+                return False
+        return True
+
+    def finalizar_projeto(self):
+        self.situacao = "Concluído"
+        self.save()
+        return self
+        
 
 class Reitor(Pessoa):
     pass

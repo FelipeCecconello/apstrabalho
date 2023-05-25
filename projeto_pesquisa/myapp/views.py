@@ -60,9 +60,8 @@ def listar_projetos(request):
 def visualizar_projeto(request, projeto_id):
     projeto = Projeto.objects.filter(id=projeto_id).first()
     atividades = projeto.atividades.all()
-    
-    return render(request, 'adicionar_projeto.html', { 'success': False, 'edit': True, 'projeto': projeto, 'professor': projeto.coordenador, 'atividades': atividades})
-
+    relatorios = projeto.relatorios.all()
+    return render(request, 'adicionar_projeto.html', { 'success': False, 'edit': True, 'projeto': projeto, 'professor': projeto.coordenador, 'atividades': atividades, 'relatorios': relatorios})
 
 def criar_projeto(request, professor_id):
     professor = get_object_or_404(Professor, pk=professor_id)
@@ -86,6 +85,11 @@ def criar_atividade(request, projeto_id):
         return visualizar_projeto(request, projeto_id)
     return render(request, 'adicionar_atividade.html', {'projeto': projeto})
 
+def visualizar_atividade(request, atividade_id, projeto_id):
+    atividade = Atividade.objects.filter(id=atividade_id).first()
+    projeto = Projeto.objects.filter(id=projeto_id).first()
+    return render(request, 'adicionar_atividade.html', { 'tipo_tela': 'detail', 'atividade': atividade, 'projeto': projeto})
+
 def criar_relatorio(request, projeto_id):
     projeto = get_object_or_404(Projeto, pk=projeto_id)
     if request.method == 'POST':
@@ -94,15 +98,18 @@ def criar_relatorio(request, projeto_id):
         return visualizar_projeto(request, projeto_id)
     return render(request, 'adicionar_relatorio.html', {'projeto': projeto})
 
-def executar_atividade(request, atividade_id):
+def executar_atividade(request, atividade_id, projeto_id):
     atividade = get_object_or_404(Atividade, pk=atividade_id)
-    atividade.executar_atividade()
-    return render(request, 'atividade_executada.html', {'atividade': atividade})
+    atividade.executar()
+    projeto = Projeto.objects.filter(id=projeto_id).first()
+    return render(request, 'adicionar_atividade.html', { 'tipo_tela': 'detail', 'atividade': atividade, 'projeto': projeto })
 
 def finalizar_projeto(request, projeto_id):
     projeto = get_object_or_404(Projeto, pk=projeto_id)
     if projeto.verificar_conclusao():
         projeto.finalizar_projeto()
-        return render(request, 'projeto_finalizado.html', {'projeto': projeto})
-    else:
+        atividades = projeto.atividades.all()
+        relatorios = projeto.relatorios.all()
+        return render(request, 'projeto_finalizado.html', {'projeto': projeto, 'atividades': atividades, 'relatorios': relatorios})
+    else:        
         return render(request, 'atividades_pendentes.html', {'projeto': projeto})

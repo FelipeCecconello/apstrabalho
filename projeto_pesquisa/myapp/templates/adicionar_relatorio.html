@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adicionar Relatório</title>
+</head>
+<body>
+    <h1>Adicionar Relatório</h1>
+
+    <div style="margin-bottom: 20px;">Projeto Vinculado <strong>{{ projeto.nome }}</strong></div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" name="descricao" required>
+        <br><br>
+        <input type="submit" value="Adicionar Relatório">
+    </form>
+
+    <div style="margin-top: 10px;">
+        <a class="mb20" href="/myapp/visualizar-projeto/{{ projeto.id }}/"><input type="button" value="Voltar"></a>
+    </div>
+</body>
+</html>

@@ -1,6 +1,19 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Aluno, Professor, Atividade, Projeto, Reitor, Pessoa
 
+def index(request):
+    routes = [
+        {
+            'name': 'Listagem de Usuários',
+            'url': '/myapp/listar-usuarios'
+        },
+        {
+            'name': 'Listagem de Projetos',
+            'url': '/myapp/listar-projetos'
+        }
+    ]
+    return render(request, 'index.html', { 'routes': routes })
+
 def listar_usuarios(request):
     alunos = Aluno.objects.all()
     professores = Professor.objects.all()

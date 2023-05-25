@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Início</title>
+</head>
+<body>
+    <h1>Início</h1>
+    <br/><br/>
+    <h3>Rotas</h3>
+
+    <ul>
+    {% for route in routes %}
+        <li>
+            <a href="{{ route.url }}">{{ route.name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
